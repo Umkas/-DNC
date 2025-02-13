@@ -1,7 +1,5 @@
-describe('Форма регистрации', () => {
-    // beforeEach(() => {
-    //   cy.visit('https://www.wikipedia.org/'); // Заменить на актуальный URL
-    // });
+describe('Registration Form', () => {
+
     beforeEach(() => {
         Cypress.on('uncaught:exception', (err, runnable) => {
           return false; // Игнорируем ошибки CORS
@@ -9,12 +7,11 @@ describe('Форма регистрации', () => {
         cy.intercept('GET', '**/adplus.js', { statusCode: 200, body: '' }).as('blockAds');
         cy.intercept('GET', '**/cdn-ima.33across.com/**', { statusCode: 200, body: '' }).as('blockThirdParty');
 
-        cy.visit('https://demoqa.com/automation-practice-form'); // Заменить на актуальный URL
+        cy.visit('https://demoqa.com/automation-practice-form'); 
       });
   
-    it('Успешная регистрация и проверка попапа', () => {
-
-      
+    it('Test-case2  Succesful registration using only a valid data', () => {
+   
       // Заполняем поле Name1
       cy.get('input[id="firstName"]').type('Petrik');
       cy.get('input[id="lastName"]').type('Pjatochkin');
