@@ -1,18 +1,20 @@
+import locator from "../locators/registrationPageLocators";
+
 class RegistrationPage {
     constructor() {
-        this.firstName = 'input[id="firstName"]';
-        this.lastName = 'input[id="lastName"]';
-        this.email = 'input[id="userEmail"]';
+        this.firstName = locator.firstName; 
+        this.lastName = locator.lastName;
+        this.email = locator.email;
 
-        this.genderMale = '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-1"]';
-        this.genderFemale = '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-2"]';
-        this.genderOther = '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-3"]';
-        this.mobile = 'input[id="userNumber"]';
-        this.dateOfBirth = '#dateOfBirthInput';
-        this.subjects = 'input[id="subjectsInput"]';
-        this.hobbiesSports = 'input[id="hobbies-checkbox-1"]';
-        this.hobbiesReading = 'input[id="hobbies-checkbox-2"]';
-        this.hobbiesMusic = 'input[id="hobbies-checkbox-3"]';
+        this.genderMale = locator.genderMale;
+        this.genderFemale = locator.genderFemale;
+        this.genderOther = locator.genderOther;
+        this.mobile = locator.mobile;
+        this.dateOfBirth = locator.dateOfBirthInput;
+        this.subjects = locator.subjects;
+        this.hobbiesSports = locator.hobbiesSports;
+        this.hobbiesReading = locator.hobbiesReading;
+        this.hobbiesMusic = locator.hobbiesMusic;
         
         this.picture = '#uploadPicture';
         this.currentAddress = '#currentAddress';
@@ -26,15 +28,7 @@ class RegistrationPage {
       }
 
     visit() {
-        // beforeEach(() => {
-        // Cypress.on('uncaught:exception', (err, runnable) => {
-        //     return false; // Игнорируем ошибки CORS
-        // });
-        // cy.intercept('GET', '**/adplus.js', { statusCode: 200, body: '' }).as('blockAds');
-        // cy.intercept('GET', '**/cdn-ima.33across.com/**', { statusCode: 200, body: '' }).as('blockThirdParty');
-
         cy.visit('https://demoqa.com/automation-practice-form'); 
-        // });
     };
 
     fillForm(userData) {
@@ -56,15 +50,17 @@ class RegistrationPage {
         cy.get(this.mobile).type(userData.mobile);
     
         cy.get(this.dateOfBirth).click(); // Открываем календарь
-        // Выбираем месяц (например, Март)
+
         cy.get('.react-datepicker__month-select').select('March');
-        // Выбираем год (например, 2026)
+
         cy.get('.react-datepicker__year-select').select('2000');
-        // Выбираем день (например, 15-е число)
+   
         cy.get('.react-datepicker__day--015').click();
 
 
-    
+
+
+
         // cy.get(this.subjects).type(userData.subjects);         пропускаем это поле т.к. на нём зависает тест
         // cy.get(this.hobbiesSports).click(); 
         // cy.get(this.picture).selectFile(userData.picturePath);

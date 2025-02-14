@@ -3,10 +3,10 @@ const locator = {
     lastName: 'input[id="lastName"]',
     email: 'input[id="userEmail"]',
     genderMale: '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-1"]',
-    genderFemale: 'label[for="gender-radio-2"]',
-    genderOther: 'label[for="gender-radio-3"]',
+    genderFemale: '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-2"]',
+    genderOther: '.custom-control.custom-radio.custom-control-inline label[for="gender-radio-3"]',
     mobile: 'input[id="userNumber"]',
-    dateOfBirthInput: 'input[id="dateOfBirthInput"]',
+    dateOfBirthInput: '#dateOfBirthInput', 
     dateOfBirthCalendar: '.react-datepicker',     //
     subjects: 'input[id="subjectsInput"]',
     hobbiesSports: 'input[id="hobbies-checkbox-1"]',
