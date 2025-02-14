@@ -18,8 +18,23 @@ describe('Registration Form', () => {
       // Заполняем поле email
       cy.get('input[id="userEmail"]').type('test@example.com');
       cy.get('input[id="userNumber"]').type('0123456789');
-            // Выбираем гендер (например, Male)
+
+      // Выбираем гендер (например, Male)
       cy.get('label[for="gender-radio-1"]').click();
+
+      cy.get('#dateOfBirthInput').click(); // Открываем календарь
+
+      // Выбираем месяц (например, Март)
+      cy.get('.react-datepicker__month-select').select('March');
+      
+      // Выбираем год (например, 2026)
+      cy.get('.react-datepicker__year-select').select('2000');
+      
+      // Выбираем день (например, 15-е число)
+      cy.get('.react-datepicker__day--015').click();
+
+
+
   
       // Нажимаем кнопку Submit
       cy.get('.btn.btn-primary#submit').click();
@@ -38,7 +53,11 @@ describe('Registration Form', () => {
         cy.contains('td', 'Email').next().should('have.text', 'test@example.com');      
         cy.contains('td', 'Mobile').next().should('have.text', '0123456789');
         cy.contains('td', 'Gender').next().should('have.text', 'Male');
+        cy.contains('td', 'Date of Birth').next().should('have.text', '15 March,2000');
       });
+
+      cy.wait(5000);
+      cy.get('#closeLargeModal').scrollIntoView().click({ force: true });
     });
   });
   
