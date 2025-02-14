@@ -1,6 +1,5 @@
 class RegistrationPage {
     constructor() {
-
         this.firstName = 'input[id="firstName"]';
         this.lastName = 'input[id="lastName"]';
         this.email = 'input[id="userEmail"]';
@@ -27,22 +26,33 @@ class RegistrationPage {
       }
 
     visit() {
-        beforeEach(() => {
-        Cypress.on('uncaught:exception', (err, runnable) => {
-            return false; // Игнорируем ошибки CORS
-        });
-        cy.intercept('GET', '**/adplus.js', { statusCode: 200, body: '' }).as('blockAds');
-        cy.intercept('GET', '**/cdn-ima.33across.com/**', { statusCode: 200, body: '' }).as('blockThirdParty');
+        // beforeEach(() => {
+        // Cypress.on('uncaught:exception', (err, runnable) => {
+        //     return false; // Игнорируем ошибки CORS
+        // });
+        // cy.intercept('GET', '**/adplus.js', { statusCode: 200, body: '' }).as('blockAds');
+        // cy.intercept('GET', '**/cdn-ima.33across.com/**', { statusCode: 200, body: '' }).as('blockThirdParty');
 
-        cy.visit('https://demoqa.com/automation-practice-form'); // Заменить на актуальный URL
-        });
+        cy.visit('https://demoqa.com/automation-practice-form'); 
+        // });
     };
 
     fillForm(userData) {
         cy.get(this.firstName).type(userData.firstName);
         cy.get(this.lastName).type(userData.lastName);
         cy.get(this.email).type(userData.email);
-        cy.get(this.genderMale).click(); 
+
+        //по-взрослому делаем выбор пола
+        if (userData.gender === 'Male') {
+            cy.get(this.genderMale).click();
+        } else if (userData.gender === 'Female') {
+            cy.get(this.genderFemale).click();
+        } else {
+            cy.get(this.genderOther).click();
+        }
+       // cy.get(this.genderMale).click(); 
+
+
         cy.get(this.mobile).type(userData.mobile);
     
         cy.get(this.dateOfBirth).click(); // Открываем календарь
@@ -63,7 +73,13 @@ class RegistrationPage {
         // cy.get(this.city).click().contains(userData.city).click();
     }
 
-    submit(){
+
+    fillSubjectField(userData){
+        cy.get(this.subjects).type(userData.subjects);
+    };
+
+
+    submitForm(){
         cy.get(this.submit).should('be.visible').click();
     }
 
@@ -73,12 +89,16 @@ class RegistrationPage {
 
     verifyInputedData(userData){
         cy.get(this.modalTable).within(() => {
-            cy.contains('td', 'Student Name').next().should('have.text', 'Petrik Pjatochkin');
-            cy.contains('td', 'Email').next().should('have.text', 'test@example.com');      
-            cy.contains('td', 'Mobile').next().should('have.text', '0123456789');
-            cy.contains('td', 'Gender').next().should('have.text', 'Male');
+            cy.contains('td', 'Student Name').next().should('have.text', userData.firstName+' '+userData.lastName);
+            cy.contains('td', 'Email').next().should('have.text', userData.email);      
+            cy.contains('td', 'Mobile').next().should('have.text', userData.mobile);
+            cy.contains('td', 'Gender').next().should('have.text', userData.gender);
             cy.contains('td', 'Date of Birth').next().should('have.text', '15 March,2000');
           });
+    };
+
+    verifySubjectsCleared(){
+        cy.get(this.subjects).should('have.value', '');
     };
 
     closeModal(){
